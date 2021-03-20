@@ -1,0 +1,23 @@
+mode: set
+github.com/jfk23/gobookings/internal/render/renders.go:20.40,22.2 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:24.84,31.2 5 1
+github.com/jfk23/gobookings/internal/render/renders.go:34.112,38.18 2 1
+github.com/jfk23/gobookings/internal/render/renders.go:48.2,49.9 2 1
+github.com/jfk23/gobookings/internal/render/renders.go:56.2,61.14 3 1
+github.com/jfk23/gobookings/internal/render/renders.go:71.2,71.12 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:38.18,40.3 1 0
+github.com/jfk23/gobookings/internal/render/renders.go:40.8,42.3 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:49.9,51.3 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:61.14,64.3 2 0
+github.com/jfk23/gobookings/internal/render/renders.go:78.62,83.16 3 1
+github.com/jfk23/gobookings/internal/render/renders.go:87.2,87.29 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:113.2,113.20 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:83.16,85.3 1 0
+github.com/jfk23/gobookings/internal/render/renders.go:87.29,93.17 3 1
+github.com/jfk23/gobookings/internal/render/renders.go:97.3,99.17 2 1
+github.com/jfk23/gobookings/internal/render/renders.go:103.3,103.23 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:109.3,109.20 1 1
+github.com/jfk23/gobookings/internal/render/renders.go:93.17,95.4 1 0
+github.com/jfk23/gobookings/internal/render/renders.go:99.17,101.4 1 0
+github.com/jfk23/gobookings/internal/render/renders.go:103.23,105.18 2 1
+github.com/jfk23/gobookings/internal/render/renders.go:105.18,107.5 1 0

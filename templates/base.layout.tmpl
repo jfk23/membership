@@ -1,32 +1,317 @@
 {{define "base"}}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
-      crossorigin="anonymous"
-    />
-    {{ block "css" .}}
+    <!doctype html>
+    <html lang="en">
 
-    {{end}}
-  </head>
-  <body>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>My Nice Page</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
+            integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bs4.min.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+ 
+    </head>
+
+    <body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/about">About</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Rooms
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/generals-room">General's Quarters</a>
+          <a class="dropdown-item" href="/majors-room">Major's Suite</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/search">Book Now</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/contact">Contact</a>
+      </li>
+       {{ if eq .IsAuthenticated 1}}
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Admin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/admin/dashboard">Admin Dashboard</a>
+          <a class="dropdown-item" href="/user/logout">Logout</a>
+        </div>
+      </li>
+       {{else}}
+       <li class="nav-item">
+        <a class="nav-link" href="/user/login">Login</a>
+        {{end}}
+      </li>
+      
+    </ul>
+  </div>
+</nav>
   {{block "content" .}}
 
   {{end}}
+
+
+    <footer class="my-footer">
+        <div class="row">
+            <div class="col">
+                left
+            </div>
+
+            <div class="col">
+                center
+            </div>
+
+            <div class="col">
+                right
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" 
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker-full.min.js"></script>
+        <script src="https://unpkg.com/notie"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        
+
+  
 
   {{block "js" .}}
 
   {{end}}
 
 
-  </body>
-</html>
+    <script>
+      let attention = Prompt();
+
+      function Prompt() {
+    
+    let toast = function(c) {
+        const {
+          title = "",
+          position = 'top-end',
+          icon = 'success'
+
+        } = c;
+        const Toast = Swal.mixin({
+        icon : icon,
+        title: title,
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({})
+
+
+    }
+    let success = function(c) {
+      const {
+        title="",
+        text="",
+        footer="",
+        icon="success"
+      } = c ;
+
+      Swal.fire({
+      icon: icon,
+      title: title,
+      text: text,
+      footer: footer,
+    })
+
+    }
+
+    let error = function(c) {
+      const {
+        title="",
+        text="",
+        footer="",
+        icon="error"
+      } = c ;
+
+      Swal.fire({
+      icon: icon,
+      title: title,
+      text: text,
+      footer: footer,
+    })
+
+    }
+
+    let custom = async function(c) {
+      const {
+        title="",
+        html="",
+        icon="",
+        showConfirmButton=true
+
+      } = c;
+
+      const { value: formValues } = await Swal.fire({
+        icon: icon,
+        title: title,
+        html: html,
+        focusConfirm: false,
+        showCancelButton: true,
+        showConfirmButton: showConfirmButton,
+        willOpen: () => {
+          if(c.willOpen !== undefined) {
+            c.willOpen();
+          }
+          },
+
+        didOpen: () => {
+          if(c.didOpen !== undefined) {
+            c.didOpen();
+          }
+        },
+        preConfirm: () => {
+          return [
+            document.getElementById('popup-start-date').value,
+            document.getElementById('popup-end-date').value
+          ]
+        }
+      })
+
+      if (formValues) {
+        if (formValues.value !== "") {
+          if (c.callback !== undefined)  {
+            return c.callback(formValues);
+          } 
+        } else {
+          return c.callback(false);
+        }
+      }
+
+    }
+
+
+
+    return {
+      toast : toast,
+      success : success,
+      error : error,
+      custom: custom,
+    }
+  }
+
+      function showAlert(msg, alertType) {
+        notie.alert({
+        type: alertType, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
+        text: msg,
+        })
+      }
+      console.log("hi error0");
+
+      {{ with .ErrorMsg }}
+      
+      console.log("hi error1");
+
+      showAlert("{{.}}", "error");
+      
+      {{end}}
+      
+      console.log("hi error2");
+
+      {{ with .FlashMsg }}
+      
+      console.log("hi error3");
+
+      showAlert("{{.}}", "success");
+      
+      {{end}}
+
+      {{ with .WarningMsg }}
+
+      showAlert("{{.}}", "warning");
+      
+      {{end}}
+      
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          })
+      })();
+
+
+      console.log("custom script is loading");
+
+      
+
+      let textData = document.getElementById("myParagraph");
+      let htmlData = `
+      <form id = "make-reservation-forms" action="" method="POST" novalidate class="needs-validation">
+        <div class="form-row">               
+                            <div class="form-row" id="reservation-dates-popup">
+                                    <div class="col">  
+                                      <input disabled required type="text" class="form-control" id="popup-start-date" name="popup-start-date"  placeholder="arrival">
+                                    </div>
+
+                                    <div class="col">
+                                      <input disabled required type="text" class="form-control" id="popup-end-date" name="popup-end-date"  placeholder="departure">  
+                                    </div>
+                            </div>
+                    </div>
+      </form>
+      
+      `;
+
+
+      
+
+    </script>
+    
+    
+
+
+    </body>
+
+    </html>
 
 {{end}}

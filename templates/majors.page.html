@@ -1,0 +1,115 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col">
+            <img src="/static/images/marjors-suite.png"
+                 class="img-fluid img-thumbnail mx-auto d-block room-image" alt="room image">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center mt-4">Major's Suite</h1>
+            <p>
+                Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation
+                to remember.
+                Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation
+                to remember.
+                Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation
+                to remember.
+                Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation
+                to remember.
+                Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation
+                to remember.
+                Your home away form home, set on the majestic waters of the Atlantic Ocean, this will be a vacation
+                to remember.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col text-center">
+
+            <a id="check-availability-button" href="#!" class="btn btn-success">Check Availability</a>
+
+        </div>
+    </div>
+    
+
+
+
+</div>
+
+
+
+{{end}}
+
+{{define "js"}}
+
+<script>
+
+
+    document.getElementById("check-availability-button").addEventListener("click", function(){
+      
+    attention.custom(
+      {title:"Choose your dates", 
+      html:htmlData,
+      willOpen: () => {
+            const elem = document.getElementById('reservation-dates-popup');
+            const rangepicker = new DateRangePicker(elem, {
+               // ...options
+               minDate: new Date()
+              })
+            },
+      didOpen: () => {
+      document.getElementById('popup-start-date').removeAttribute('disabled');
+      document.getElementById('popup-end-date').removeAttribute('disabled');
+      },
+      callback: function(formValues) {
+          let form = document.getElementById("make-reservation-forms");
+          console.log(form)
+          let formdata = new FormData(form);
+          console.log(formValues);
+          
+          formdata.append("csrf_token", "{{.CSRFToken}}");
+          formdata.append("room_id", "2")
+          console.log(formdata);
+
+          console.log("called")
+          fetch("/search-json", {method: "post", body: formdata,}).then((response)=> response.json()).then((data)=>{
+              if (data.ok) {
+                  console.log("room is available!")
+                  console.log(data.ok)
+                  console.log(data.start_date)
+                  attention.custom(
+                      {
+                          title: "",
+                          html: `<a href="/book-room/?id=2&s=`+data.start_date+`&e=`+data.end_date+`">Book Now</a>`,
+                          icon: "success",
+                          showConfirmButton: false
+                      }
+                  )
+                      
+                  
+              } else {
+                  console.log("sorry not available")
+              }
+              
+          })
+      }
+  });
+
+    });
+
+</script>
+
+
+{{end}}

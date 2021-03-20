@@ -1,0 +1,12 @@
+mode: set
+github.com/jfk23/gobookings/cmd/web/main.go:22.13,24.15 2 0
+github.com/jfk23/gobookings/cmd/web/main.go:40.2,50.14 4 0
+github.com/jfk23/gobookings/cmd/web/main.go:24.15,26.3 1 0
+github.com/jfk23/gobookings/cmd/web/main.go:54.18,69.16 10 1
+github.com/jfk23/gobookings/cmd/web/main.go:73.2,82.12 6 1
+github.com/jfk23/gobookings/cmd/web/main.go:69.16,72.3 2 0
+github.com/jfk23/gobookings/cmd/web/middleware.go:10.51,11.72 1 1
+github.com/jfk23/gobookings/cmd/web/middleware.go:11.72,14.3 2 0
+github.com/jfk23/gobookings/cmd/web/middleware.go:17.45,28.2 3 1
+github.com/jfk23/gobookings/cmd/web/middleware.go:30.50,32.2 1 1
+github.com/jfk23/gobookings/cmd/web/routes.go:12.49,40.2 19 1

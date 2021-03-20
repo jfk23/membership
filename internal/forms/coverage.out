@@ -1,0 +1,17 @@
+mode: set
+github.com/jfk23/gobookings/internal/forms/errors.go:6.44,8.2 1 1
+github.com/jfk23/gobookings/internal/forms/errors.go:10.42,12.18 2 1
+github.com/jfk23/gobookings/internal/forms/errors.go:15.2,15.14 1 1
+github.com/jfk23/gobookings/internal/forms/errors.go:12.18,14.3 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:16.33,21.2 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:23.29,25.2 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:27.43,28.31 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:28.31,30.17 2 1
+github.com/jfk23/gobookings/internal/forms/forms.go:30.17,32.4 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:37.52,39.21 2 1
+github.com/jfk23/gobookings/internal/forms/forms.go:39.21,41.3 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:44.44,45.40 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:45.40,47.3 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:51.39,52.43 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:52.43,55.3 1 1
+github.com/jfk23/gobookings/internal/forms/forms.go:55.8,57.15 2 1

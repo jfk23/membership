@@ -1,0 +1,1 @@
+delet from restrictions;

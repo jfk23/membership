@@ -154,6 +154,7 @@
       
 
       let textData = document.getElementById("myParagraph");
+      
       let htmlData = `
       <form id = "make-reservation-forms" action="" method="POST" novalidate class="needs-validation">
         <div class="form-row">               
@@ -196,12 +197,12 @@
         // ...options
       });
 
-      // function showAlert(msg, alertType) {
-      //   notie.alert({
-      //   type: alertType, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
-      //   text: msg,
-      //   })
-      // }
+      function showAlert(msg, alertType) {
+        notie.alert({
+        type: alertType, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
+        text: msg,
+        })
+      }
 
       function Prompt() {
         let toast = function(c) {
@@ -296,6 +297,7 @@
 
           if (formValues) {
             Swal.fire(JSON.stringify(formValues))
+            // if (formValues.dismiss !== Swal.DismissReason.cancel){}
           }
 
         }

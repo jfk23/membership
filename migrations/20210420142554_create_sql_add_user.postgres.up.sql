@@ -1,0 +1,1 @@
+INSERT INTO public.users (first_name,last_name,email,"password",access_level,created_at,updated_at) VALUES ('nuburi','go','admin@a.a','$2a$12$FtcS1po.hs.8VYHNXTgIhudseitXLEXxibiDjgbRqBEv1IF1U4qaa',3,'2021-04-08 00:00:00','2021-04-08 00:00:00');

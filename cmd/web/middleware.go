@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/jfk23/gobookings/cmd/web/helpers"
 	"github.com/justinas/nosurf"
 )
 
@@ -29,4 +30,16 @@ func NoSulf(next http.Handler) http.Handler {
 
 func LoadSession(next http.Handler) http.Handler {
 	return sessionManager.LoadAndSave(next)
+}
+
+func Auth (next http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+		if !helpers.IsAuthenticate(r) {
+			// appConfig.Session.Put(r.Context(), "error", "Please log in first")
+			sessionManager.Put(r.Context(), "error", "Please log in first")
+			http.Redirect(rw, r, "/user/login", http.StatusSeeOther)
+			return
+		}
+		next.ServeHTTP(rw, r)
+	})
 }

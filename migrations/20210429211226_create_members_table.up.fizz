@@ -1,0 +1,20 @@
+create_table("members") {
+    t.Column("id", "integer", {primary:true})
+    t.Column("member_class", "int", {})
+    t.Column("community_group_id", "int", {})
+    t.Column("small_group_id", "int", {})
+    t.Column("korean_name", "string", {"size":255})
+    t.Column("english_name", "string", {"size":255})
+    t.Column("address", "string", {"size":255})
+    t.Column("email", "string", {"size":255})
+    t.Column("phone", "string", {"size":255})
+    t.Column("family_members", "string", {"size":255})
+
+}
+
+sql( `
+    CREATE TRIGGER set_timestamp
+        BEFORE UPDATE on members
+        FOR EACH ROW
+    EXECUTE PROCEDURE trigger_set_timestamp();
+`)

@@ -1,0 +1,11 @@
+create_table("member_class") {
+    t.Column("id", "integer", {primary:true})
+    t.Column("class_name", "string", {"size":255})
+}
+
+sql( `
+    CREATE TRIGGER set_timestamp
+        BEFORE UPDATE on member_class
+        FOR EACH ROW
+    EXECUTE PROCEDURE trigger_set_timestamp();
+`)

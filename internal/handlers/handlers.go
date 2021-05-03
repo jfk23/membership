@@ -54,6 +54,13 @@ func (re *Repository) Home(rw http.ResponseWriter, r *http.Request) {
 
 }
 
+func (re *Repository) AdminAddMember(rw http.ResponseWriter, r *http.Request) {
+	render.Template(rw, r, "new_member.page.html", &model.TemplateData{
+		Form: forms.New(nil),
+	})
+
+}
+
 func (re *Repository) Reservation(rw http.ResponseWriter, r *http.Request) {
 	res, ok := re.ConfigSetting.Session.Get(r.Context(), "reservation").(model.Reservation)
 	if !ok {
@@ -160,15 +167,14 @@ func (re *Repository) PostReservation(rw http.ResponseWriter, r *http.Request) {
 			startDate, _ = time.Parse("2006-01-02", "2022-02-20")
 			endDate, _ = time.Parse("2006-01-02", "2022-02-22")
 			roomID = 1
-			
 
 			//print("game over here?????")
 			//http.Error(rw, "invalid form data", http.StatusSeeOther)
 
 		} else {
-		startDate = res.StartDate
-		endDate = res.EndDate
-		roomID = res.RoomID
+			startDate = res.StartDate
+			endDate = res.EndDate
+			roomID = res.RoomID
 		}
 
 	}
@@ -216,8 +222,8 @@ func (re *Repository) PostReservation(rw http.ResponseWriter, r *http.Request) {
 		//http.Error(rw, "invalid form data", http.StatusSeeOthe1)
 
 		existingTemplateData = &model.TemplateData{
-			Form:    formdata,
-			DataMap: data,
+			Form:      formdata,
+			DataMap:   data,
 			StringMap: stringMap,
 		}
 		re.ConfigSetting.Session.Put(r.Context(), "reservation", res)
@@ -564,7 +570,7 @@ func (re *Repository) PostShowLogin(rw http.ResponseWriter, r *http.Request) {
 
 	re.ConfigSetting.Session.Put(r.Context(), "user_id", id)
 	re.ConfigSetting.Session.Put(r.Context(), "flash", "hi logged in successfully")
-	http.Redirect(rw, r, "/", http.StatusSeeOther)
+	http.Redirect(rw, r, "/admin/dashboard", http.StatusSeeOther)
 
 }
 

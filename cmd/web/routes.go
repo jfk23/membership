@@ -18,8 +18,7 @@ func Routes(app *config.AppConfig) http.Handler {
 	mux.Use(NoSulf)
 	mux.Use(LoadSession)
 
-
-	mux.Get("/", handlers.Repo.Home)
+	mux.Get("/", handlers.Repo.ShowLogin)
 	mux.Get("/about", handlers.Repo.About)
 	mux.Get("/generals-room", handlers.Repo.Generals)
 	mux.Get("/majors-room", handlers.Repo.Majors)
@@ -29,7 +28,7 @@ func Routes(app *config.AppConfig) http.Handler {
 	mux.Get("/make-reservation", handlers.Repo.Reservation)
 	mux.Post("/make-reservation", handlers.Repo.PostReservation)
 	mux.Get("/reservation-summary", handlers.Repo.ReservationSummary)
-	
+
 	mux.Get("/contact", handlers.Repo.Contact)
 	mux.Get("/search", handlers.Repo.Search)
 	mux.Post("/search", handlers.Repo.PostSearch)
@@ -44,9 +43,9 @@ func Routes(app *config.AppConfig) http.Handler {
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	mux.Route("/admin", func(r chi.Router) {
-		//r.Use(Auth)
+		r.Use(Auth)
 		r.Get("/dashboard", handlers.Repo.AdminDashBoard)
-		
+
 		r.Get("/reservations-new", handlers.Repo.AdminNewReservations)
 		r.Get("/reservations-all", handlers.Repo.AdminAllReservations)
 		r.Get("/reservations-calendar", handlers.Repo.AdminReservationsCalendar)
@@ -55,7 +54,8 @@ func Routes(app *config.AppConfig) http.Handler {
 		r.Get("/process-reservation/{src}/{id}/do", handlers.Repo.AdminProcessReservation)
 		r.Get("/delete-reservation/{src}/{id}/do", handlers.Repo.AdminDeleteReservation)
 		r.Post("/reservation/{src}/{id}", handlers.Repo.AdminPostShowReservation)
-		
+		r.Get("/add-new", handlers.Repo.AdminAddMember)
+
 	})
 
 	return mux

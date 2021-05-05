@@ -92,23 +92,23 @@ func (m *testDBRepo) GetReservationByID(id int) (model.Reservation, error) {
 	return res, nil
 }
 
-func (m *testDBRepo) UpdateReservations (u model.Reservation) error {
+func (m *testDBRepo) UpdateReservations(u model.Reservation) error {
 
 	return nil
 }
 
-func (m *testDBRepo) DeleteReservationByID (id int) error {
+func (m *testDBRepo) DeleteReservationByID(id int) error {
 
 	return nil
 }
 
-func (m *testDBRepo) UpdateProcessedForReservation (id, processed int) error {
+func (m *testDBRepo) UpdateProcessedForReservation(id, processed int) error {
 
 	return nil
 }
 
 func (m *testDBRepo) AllRooms() ([]model.Room, error) {
-	
+
 	var rooms []model.Room
 	return rooms, nil
 }
@@ -118,11 +118,19 @@ func (m *testDBRepo) GetRoomRestrictionByDate(roomID int, start, end time.Time) 
 	return restrictions, nil
 }
 
-
 func (m *testDBRepo) InsertBlockForRoom(RoomID int, start time.Time) error {
 	return nil
 }
 
 func (m *testDBRepo) DeleteBlockByID(id int) error {
 	return nil
+}
+
+func (m *testDBRepo) InsertMember(member model.Member) (int, error) {
+	return 0, nil
+}
+
+func (m *testDBRepo) AllMembers() ([]model.Member, error) {
+	var members []model.Member
+	return members, nil
 }

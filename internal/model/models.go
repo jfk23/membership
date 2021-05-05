@@ -65,3 +65,20 @@ type MailData struct {
 	Content  string
 	Template string
 }
+
+// KCPC membership models
+
+type Member struct {
+	ID               int
+	MemberClass      int
+	CommunityGroupID int
+	SmallGroupID     int
+	KORName          string
+	ENGName          string
+	Address          string
+	Email            string
+	Phone            string
+	FamilyMembers    string
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
+}

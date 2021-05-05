@@ -13,28 +13,6 @@ func (m *postgresDBRepo) AllUsers() bool {
 	return true
 }
 
-func (m *postgresDBRepo) InsertReservation(res model.Reservation) (int, error) {
-	print("insert db called")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	var ReservationID int
-
-	query := `insert into reservations (first_name, last_name, email, phone,
-			 start_date, end_date, room_id, created_at, updated_at) values
-			 ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id`
-	err := m.DB.QueryRowContext(ctx, query, res.FirstName, res.LastName, res.Email, res.Phone,
-	res.StartDate, res.EndDate, res.RoomID, time.Now(), time.Now()).Scan(&ReservationID)
-
-
-	if err != nil {
-		print("inserting data into DB failed!!!")
-		return 0, err
-	}
-
-	return ReservationID, nil
-}
-
 func (m *postgresDBRepo) InsertRoomRestriction(res model.RoomRestriction) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -43,7 +21,7 @@ func (m *postgresDBRepo) InsertRoomRestriction(res model.RoomRestriction) error 
 			 restriction_id, created_at, updated_at) values
 			 ($1, $2, $3, $4, $5, $6, $7)`
 	_, err := m.DB.ExecContext(ctx, query, res.StartDate, res.EndDate, res.RoomID, res.ReservationID,
-	res.RestrictionID, time.Now(), time.Now())
+		res.RestrictionID, time.Now(), time.Now())
 
 	if err != nil {
 		print("inserting data into DB failed!!!")
@@ -74,12 +52,12 @@ func (m *postgresDBRepo) SearchAvailabilityByDateByRoomID(roomID int, startDate,
 	return false, nil
 }
 
-func (m *postgresDBRepo) SearchAvailabilityByDateAll (startDate, endDate time.Time) ([]model.Room, error) {
+func (m *postgresDBRepo) SearchAvailabilityByDateAll(startDate, endDate time.Time) ([]model.Room, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	var rooms []model.Room
-	
+
 	query := `select r.id, r.room_name
 	from rooms r
 	where r.id not in (select rr.id 
@@ -112,7 +90,7 @@ func (m *postgresDBRepo) SearchAvailabilityByDateAll (startDate, endDate time.Ti
 	return rooms, nil
 }
 
-func (m *postgresDBRepo) GetRoomByID (id int) (model.Room, error) {
+func (m *postgresDBRepo) GetRoomByID(id int) (model.Room, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -130,7 +108,7 @@ func (m *postgresDBRepo) GetRoomByID (id int) (model.Room, error) {
 
 }
 
-func (m *postgresDBRepo) GetUserByID (id int) (model.User, error) {
+func (m *postgresDBRepo) GetUserByID(id int) (model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -150,7 +128,7 @@ func (m *postgresDBRepo) GetUserByID (id int) (model.User, error) {
 
 }
 
-func (m *postgresDBRepo) UpdateUser (u model.User) error {
+func (m *postgresDBRepo) UpdateUser(u model.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -163,10 +141,10 @@ func (m *postgresDBRepo) UpdateUser (u model.User) error {
 	}
 
 	return nil
-	
+
 }
 
-func (m *postgresDBRepo) Authenticate (email, testPassword string) (int, string, error) {
+func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -310,29 +288,29 @@ func (m *postgresDBRepo) GetReservationByID(id int) (model.Reservation, error) {
 	row := m.DB.QueryRowContext(ctx, query, id)
 
 	err := row.Scan(
-			&res.ID,
-			&res.FirstName,
-			&res.LastName,
-			&res.Email,
-			&res.Phone,
-			&res.StartDate,
-			&res.EndDate,
-			&res.RoomID,
-			&res.CreatedAt,
-			&res.UpdatedAt,
-			&res.Processed,
-			&res.Room.ID,
-			&res.Room.RoomName,
-		)
-		if err != nil {
-			return res, err
-		}
+		&res.ID,
+		&res.FirstName,
+		&res.LastName,
+		&res.Email,
+		&res.Phone,
+		&res.StartDate,
+		&res.EndDate,
+		&res.RoomID,
+		&res.CreatedAt,
+		&res.UpdatedAt,
+		&res.Processed,
+		&res.Room.ID,
+		&res.Room.RoomName,
+	)
+	if err != nil {
+		return res, err
+	}
 
-		return res, nil
+	return res, nil
 
 }
 
-func (m *postgresDBRepo) UpdateReservations (u model.Reservation) error {
+func (m *postgresDBRepo) UpdateReservations(u model.Reservation) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -349,7 +327,7 @@ func (m *postgresDBRepo) UpdateReservations (u model.Reservation) error {
 	return nil
 }
 
-func (m *postgresDBRepo) DeleteReservationByID (id int) error {
+func (m *postgresDBRepo) DeleteReservationByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -364,7 +342,7 @@ func (m *postgresDBRepo) DeleteReservationByID (id int) error {
 	return nil
 }
 
-func (m *postgresDBRepo) UpdateProcessedForReservation (id, processed int) error {
+func (m *postgresDBRepo) UpdateProcessedForReservation(id, processed int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -446,7 +424,6 @@ func (m *postgresDBRepo) GetRoomRestrictionByDate(roomID int, start, end time.Ti
 			&r.RoomID,
 			&r.ReservationID,
 			&r.RestrictionID,
-			
 		)
 
 		if err != nil {
@@ -463,7 +440,6 @@ func (m *postgresDBRepo) GetRoomRestrictionByDate(roomID int, start, end time.Ti
 	return restrictions, nil
 }
 
-
 func (m *postgresDBRepo) InsertBlockForRoom(RoomID int, start time.Time) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -471,7 +447,21 @@ func (m *postgresDBRepo) InsertBlockForRoom(RoomID int, start time.Time) error {
 	query := `insert into room_restrictions (start_date, end_date, room_id, restriction_id, created_at, updated_at) 
 			values($1, $2, $3, $4, $5, $6)`
 
-	_, err := m.DB.ExecContext(ctx, query, start, start.AddDate(0,0,1), RoomID, 2, time.Now(), time.Now())
+	_, err := m.DB.ExecContext(ctx, query, start, start.AddDate(0, 0, 1), RoomID, 2, time.Now(), time.Now())
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *postgresDBRepo) InsertNewMember(RoomID int, start time.Time) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `insert into room_restrictions (start_date, end_date, room_id, restriction_id, created_at, updated_at) 
+			values($1, $2, $3, $4, $5, $6)`
+
+	_, err := m.DB.ExecContext(ctx, query, start, start.AddDate(0, 0, 1), RoomID, 2, time.Now(), time.Now())
 	if err != nil {
 		return err
 	}
@@ -489,4 +479,96 @@ func (m *postgresDBRepo) DeleteBlockByID(id int) error {
 		return err
 	}
 	return nil
+}
+
+func (m *postgresDBRepo) InsertReservation(res model.Reservation) (int, error) {
+	print("insert db called")
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var ReservationID int
+
+	query := `insert into reservations (first_name, last_name, email, phone,
+			 start_date, end_date, room_id, created_at, updated_at) values
+			 ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id`
+	err := m.DB.QueryRowContext(ctx, query, res.FirstName, res.LastName, res.Email, res.Phone,
+		res.StartDate, res.EndDate, res.RoomID, time.Now(), time.Now()).Scan(&ReservationID)
+
+	if err != nil {
+		print("inserting data into DB failed!!!")
+		return 0, err
+	}
+
+	return ReservationID, nil
+}
+
+// KCPC membership functions below
+
+func (m *postgresDBRepo) InsertMember(member model.Member) (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var MemberID int
+
+	query := `insert into members (member_class, community_group_id, small_group_id, korean_name,
+			 english_name, address, email, phone, family_members, created_at, updated_at) values
+			 ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) returning id`
+	err := m.DB.QueryRowContext(ctx, query, member.MemberClass, member.CommunityGroupID,
+		member.SmallGroupID, member.KORName, member.ENGName, member.Address, member.Email,
+		member.Phone, member.FamilyMembers, time.Now(), time.Now()).Scan(&MemberID)
+
+	if err != nil {
+		print("inserting memeber into DB failed!!!")
+		return 0, err
+	}
+
+	return MemberID, nil
+}
+
+func (m *postgresDBRepo) AllMembers() ([]model.Member, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var members []model.Member
+
+	query := `select *
+			from members
+			order by english_name asc`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return members, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var i model.Member
+		err = rows.Scan(
+			&i.ID,
+			&i.MemberClass,
+			&i.CommunityGroupID,
+			&i.SmallGroupID,
+			&i.KORName,
+			&i.ENGName,
+			&i.Address,
+			&i.Email,
+			&i.Phone,
+			&i.FamilyMembers,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		)
+		if err != nil {
+			return members, err
+		}
+
+		members = append(members, i)
+	}
+
+	if err = rows.Err(); err != nil {
+		return members, err
+	}
+
+	return members, nil
+
 }

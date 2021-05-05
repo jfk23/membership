@@ -54,7 +54,11 @@ func Routes(app *config.AppConfig) http.Handler {
 		r.Get("/process-reservation/{src}/{id}/do", handlers.Repo.AdminProcessReservation)
 		r.Get("/delete-reservation/{src}/{id}/do", handlers.Repo.AdminDeleteReservation)
 		r.Post("/reservation/{src}/{id}", handlers.Repo.AdminPostShowReservation)
+
+		// KCPC membership routes
 		r.Get("/add-new", handlers.Repo.AdminAddMember)
+		r.Post("/add-new", handlers.Repo.AdminPostAddMember)
+		r.Get("/members-all", handlers.Repo.AdminAllMembers)
 
 	})
 

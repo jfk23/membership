@@ -865,3 +865,70 @@ func (re *Repository) AdminPostReservationsCalendar(rw http.ResponseWriter, r *h
 	http.Redirect(rw, r, fmt.Sprintf("/admin/reservations-calendar?y=%d&m=%d", year, month), http.StatusSeeOther)
 
 }
+
+func (re *Repository) AdminPostAddMember(rw http.ResponseWriter, r *http.Request) {
+
+	_ = re.ConfigSetting.Session.RenewToken(r.Context())
+
+	err := r.ParseForm()
+
+	if err != nil {
+		print("error with parseform()")
+		log.Println(err)
+	}
+
+	forms := forms.New(r.PostForm)
+
+	forms.Required("email", "korean_name", "english_name")
+	forms.EmailValidate("email")
+
+	if !forms.Valid() {
+		//print("invalid form block called!")
+
+		render.Template(rw, r, "new_member.page.html", &model.TemplateData{
+			Form: forms,
+		})
+		return
+
+	}
+
+	korName := r.Form.Get("korean_name")
+	engName := r.Form.Get("english_name")
+	email := r.Form.Get("email")
+	phone := r.Form.Get("phone")
+
+	var member model.Member
+	member.KORName = korName
+	member.ENGName = engName
+	member.Email = email
+	member.Phone = phone
+
+	id, err := re.DB.InsertMember(member)
+
+	if err != nil {
+		log.Println(err)
+		helpers.SeverError(rw, err)
+		re.ConfigSetting.Session.Put(r.Context(), "error", "failed to add new member")
+		http.Redirect(rw, r, "/admin/add-new", http.StatusSeeOther)
+		return
+	}
+
+	re.ConfigSetting.Session.Put(r.Context(), "member_id", id)
+	re.ConfigSetting.Session.Put(r.Context(), "flash", "successfully added new member!")
+	http.Redirect(rw, r, "/admin/members-all", http.StatusSeeOther)
+
+}
+
+func (re *Repository) AdminAllMembers(rw http.ResponseWriter, r *http.Request) {
+	members, err := re.DB.AllMembers()
+	if err != nil {
+		helpers.SeverError(rw, err)
+	}
+	data := make(map[string]interface{})
+	data["members"] = members
+
+	render.Template(rw, r, "admin-all-members.page.html", &model.TemplateData{
+		DataMap: data,
+	})
+
+}
